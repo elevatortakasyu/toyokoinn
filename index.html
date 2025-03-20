@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV表示</title>
+</head>
+<body>
+    <table border="1" id="csvTable"></table>
+
+    <script>
+        // CSVを読み込んでテーブルに表示
+        async function loadCSV() {
+            const response = await fetch("data.csv"); // CSVファイルを取得
+            const text = await response.text();
+            const rows = text.split("\n").map(row => row.split(",")); 
+
+            const table = document.getElementById("csvTable");
+            rows.forEach(row => {
+                let tr = document.createElement("tr");
+                row.forEach(cell => {
+                    let td = document.createElement("td");
+                    td.textContent = cell;
+                    tr.appendChild(td);
+                });
+                table.appendChild(tr);
+            });
+        }
+
+        loadCSV();
+    </script>
+</body>
+</html>
