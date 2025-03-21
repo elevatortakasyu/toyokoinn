@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Spreadsheet Data</title>
+</head>
+<body>
+    <h1>スプレッドシートのデータ</h1>
+    <div id="data"></div>
+
+    <script>
+        fetch("https://spreadsheets.google.com/feeds/list/14_xcGTSBiy0m2BMxKh8c8l5Lkl9e2Bfg/1/public/values?alt=json")
+        .then(response => response.json())
+        .then(data => {
+            let entries = data.feed.entry;
+            let html = "<ul>";
+            entries.forEach(entry => {
+                let value = entry.gsx$東横イン.$t; // 列名を適宜変更
+                html += `<li>${value}</li>`;
+            });
+            html += "</ul>";
+            document.getElementById("data").innerHTML = html;
+        })
+        .catch(error => console.error("Error:", error));
+    </script>
+</body>
+</html>
